@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,12 +21,24 @@ public class GameManager : MonoBehaviour
         MouseClicks();
     }
 
+    IEnumerator Shoot()
+    {
+        while(Input.GetMouseButton(0))
+        {
+                Instantiate(Bullet, CannonPos, Canon.transform.rotation);
+            yield return new WaitForSeconds(.2f);
+
+            yield return null;
+        }
+    }
+
+
     void MouseClicks()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Pressed left-click.");
-            Instantiate(Bullet, CannonPos, Canon.transform.rotation);
+            StartCoroutine(Shoot());
         }
         if (Input.GetMouseButtonDown(1))
         {
